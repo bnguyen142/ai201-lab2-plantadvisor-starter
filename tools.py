@@ -1,5 +1,5 @@
 import json
-import os
+import osd
 from datetime import datetime
 from config import DATA_PATH
 
@@ -52,11 +52,26 @@ def lookup_plant(plant_name: str) -> dict:
 
     Before writing code, complete the lookup_plant section of specs/tool-functions-spec.md.
     """
-    return {
-        "found": False,
-        "name": plant_name,
-        "message": "Plant lookup not yet implemented. Complete Milestone 1.",
+
+    normalized = plant_name.lower().strip()
+    result = _plant_db.get(normalized)
+
+    if result is not None:
+        return {
+            "found": True,
+            "plant": result
+        }
+    elif:{
+        for plant in _plant_db.values:
+        if normalized == plant.aliases.lower():
+        
     }
+    else:
+        return {
+            "found":False,
+            "name":plant_name,
+            "message": "No plant found"
+        }
 
 
 def get_seasonal_conditions(season: str | None = None) -> dict:
