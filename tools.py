@@ -1,5 +1,5 @@
 import json
-import osd
+import os
 from datetime import datetime
 from config import DATA_PATH
 
@@ -61,14 +61,15 @@ def lookup_plant(plant_name: str) -> dict:
             "found": True,
             "plant": result
         }
-    elif:{
-        for plant in _plant_db.values:
-        if normalized == plant.aliases.lower():
-        
-    }
     else:
+        for plant in _plant_db.values():
+            if normalized == plant["display_name"].lower() or (normalized in [a.lower() for a in plant["aliases"]]):
+                return {
+                    "found": True,
+                    "plant": plant
+                }
         return {
-            "found":False,
+            "found": False,
             "name":plant_name,
             "message": "No plant found"
         }
@@ -99,3 +100,4 @@ def get_seasonal_conditions(season: str | None = None) -> dict:
     result = dict(_season_data[season_key])
     result["detected_season"] = detected
     return result
+# 
